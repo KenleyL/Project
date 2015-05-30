@@ -1,0 +1,47 @@
+<h1>Listing items</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th>Image url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @items.each do |item| %>
+  <tr>
+    <td>
+<div class="title">
+<%= link_to item.title, item %>
+</div>
+</td>
+    <td><div class="description">
+<%=h item.description %>
+</div></td>
+    <td><%= item.category %></td>
+    <td><div class="price">
+<%= number_to_currency(item.price, :unit => "&euro;") %>
+</div></td>
+    <td>
+<div class="image">
+<%= link_to (image_tag item.image_url, :style => "height:100px"), item %>
+</div>
+</td>
+    <td><%= link_to 'Show', item %></td>
+    <td><%= link_to 'Edit', edit_item_path(item) %></td>
+    <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><a href="/cart/<%= item.id %>">Add to Cart</a></td><br><br>
+	<td><a href="/cart/remove/<%= item.id %>">Remove from Cart</a></td> 
+    <td><%= link_to 'Clear Cart', :controller => "cart", :action => "clearCart" %></td> 
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Item', new_item_path %>
